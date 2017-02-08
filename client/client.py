@@ -3,6 +3,9 @@ import json
 import re
 import urllib2
 
+QUEUE_JUMP = ' QUEUE JUMP'
+API_PATH = 'http://localhost:5000/barcode/'
+
 # http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 class bcolors:
     HEADER = '\033[95m'
@@ -13,8 +16,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-QUEUE_JUMP = ' QUEUE JUMP'
 
 def print_help():
     print
@@ -45,7 +46,7 @@ class Admissions(cmd.Cmd):
             return
 
         try:
-            response = urllib2.urlopen('http://localhost:5000/barcode/{}'.format(barcode))
+            response = urllib2.urlopen('{}{}'.format(API_PATH, barcode))
             data = json.load(response)
         except Exception:
             # Catch all
